@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>COVID Vaccination Management</title>
+  <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js" defer></script>
+<script src="script1.js" defer></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="sliding-option">
+      <button id="home-btn">Home</button>
+      <button id="admin-btn">Admin</button>
+      <button id="user-btn" class="active">User</button>
+      <button id="logout" class="right">Logout</button>
+    </div>
+  </header>
+
+<script>
+  // Replace the config object with your own Firebase project credentials
+  document.addEventListener("DOMContentLoaded", function(){
+  const firebaseConfig = {
+    // Your Firebase config goes here
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Get a reference to the Firestore database
+  const db = firebase.firestore();
+
+  function searchVaccinationCenters(event) {
+    event.preventDefault();
+    let pincodeInput = document.getElementById("pincode");
+    let pincodeToSearch = pincodeInput.value.trim();
+
+    // Query the Firestore database for matching centers
+    db.collection("vaccinationCenters")
+      .where("pincode", "==", pincodeToSearch)
+      .get()
+      .then(querySnapshot => {
+        let matchingCenters = [];
+        querySnapshot.forEach(doc => {
+          matchingCenters.push(doc.data());
+        });
+
+        let resultContainer = document.getElementById("resultContainer");
+        resultContainer.innerHTML = "";
+
+        if (matchingCenters.length > 0) {
+          let resultHTML = "<h3>Matching Vaccination Centers:</h3>";
+          matchingCenters.forEach(center => {
+            resultHTML += `<p>Pincode: ${center.pincode}</p>`;
+            resultHTML += `<p>Center Name: ${center.name}</p>`;
+            resultHTML += `<p>Working Hours: ${center.workingHours}</p>`;
+            resultHTML += "<hr>";
+          });
+          resultContainer.innerHTML = resultHTML;
+        } else {
+          resultContainer.innerHTML = "<p>No matching centers found.</p>";
+        }
+      })
+      .catch(error => {
+        console.log("Error getting vaccination centers:", error);
+      });
+  }
+
+  function bookSlot(event) {
+    event.preventDefault();
+    let pincodeInput = document.getElementById("bookingPincode");
+    let centerSelect = document.getElementById("bookingCenter");
+    let slotSelect = document.getElementById("bookingSlot");
+
+    let pincode = pincodeInput.value.trim();
+    let center = centerSelect.value;
+    let slot = slotSelect.value;
+
+    
+    
+  }
+  window.location.href = "new.html";
+});
+</script>
+<br>
+<br>
+<form id="bookingForm" onsubmit="bookSlot(event)">
+  <label for="bookingPincode">Enter Pincode:</label>
+  <input type="text" id="bookingPincode" placeholder="Pincode" required>
+
+  <label for="bookingCenter">Select Center:</label>
+  <select id="bookingCenter">
+    <!-- Populate options dynamically using JavaScript or retrieve from database -->
+    <option value="Center A">Center A</option>
+    <option value="Center B">Center B</option>
+    <!-- Add more options as needed -->
+  </select>
+
+  <label for="bookingSlot">Select Slot:</label>
+  <select id="bookingSlot">
+    <!-- Populate options dynamically using JavaScript or retrieve from database -->
+    <option value="Slot 1">Slot 1</option>
+    <option value="Slot 2">Slot 2</option>
+    <!-- Add more options as needed -->
+  </select>
+
+  <button type="submit">Book Slot</button>
+</form>
+
+<div id="resultContainer"></div>
+
+</body>
+</html>

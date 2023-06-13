@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>COVID Vaccination Management</title>
+  <style>
+    #loginContainer,
+    #otpContainer,
+    #signupContainer {
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #f0f0f0;
+      border-radius: 2px;
+      text-align: left;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+  </style>
+</head>
+<body>
+    <header>
+        <div class="sliding-option">
+          <button id="home-btn">Home</button>
+            <button id="admin-btn">Admin</button>
+          <button id="user-btn" class="active">User</button>
+          <button id="logout" class="right">Logout</button>
+        </div>
+      </header>
+      <main>
+        <div class="container1">
+         <c><h2>Login or Signup for the Registration</h2></c>
+          </div>
+          </main>
+      <div id="loginContainer">
+        <h2>Login</h2>
+        <input type="tel" id="mobileNumberLogin" placeholder="Enter Mobile Number">
+        <button id="loginBtn">Login</button>
+      </div>
+      <br>  
+      <div id="signupContainer">
+        <h2>Signup</h2>
+        <input type="tel" id="mobileNumberSignup" placeholder="Enter Mobile Number">
+        <button id="signupBtn">Signup</button>
+      </div>
+      
+      <div id="loggedInContainer" style="display: none;">
+        <h2>Welcome, <span id="userName"></span>!</h2>
+        <button id="logoutBtn">Logout</button>
+      </div>
+      
+      <div id="otpContainer" style="display: none;">
+        <h2>Verify OTP</h2>
+        <input type="text" id="otpInput" placeholder="Enter OTP">
+        <button id="verifyBtn">Verify</button>
+      </div>
+      
+    
+  <script src="script.js"></script>
+ 
+
+</body>
+</html>
+
+ 
